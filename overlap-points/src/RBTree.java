@@ -5,7 +5,7 @@
  */
 public class RBTree {
 	
-	Node Root = null;
+	private Node Root = null;
 	
 	public RBTree() {
 		
@@ -25,6 +25,10 @@ public class RBTree {
 	
 	public int getHeight() {
 		return 0;
+	}
+	
+	protected void insertPair(Endpoint beg, Endpoint end) {
+		
 	}
 	
 }

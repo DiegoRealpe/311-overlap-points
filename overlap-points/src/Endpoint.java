@@ -6,7 +6,6 @@
  */
 public class Endpoint {
 	
-	//private static final int START = -1, END = 1;
 	private int position;
 	private int ID;
 	private int direction;
