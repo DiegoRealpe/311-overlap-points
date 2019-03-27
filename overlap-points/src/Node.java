@@ -1,58 +1,101 @@
 /**
  * Node unit of the Red Black tree
- * @author diegort
  *
+ * @author diegort
  */
 public class Node {
-	
-	@SuppressWarnings("unused")
-	private static final int RED = 0, BLACK = 1;
-	Node parent, left, right;
-	int timePos, color;
-	Endpoint point;
-	
-	public Node(/*needs a shitton of parameters*/) {
-		
-	}
 
-	public Node getParent() {
-		return parent;
-	}
-	
-	public Node getLeft() {
-		return left;
-	}
-	
-	public Node getRight() {
-		return right;
-	}
-	
-	public int getKey() {
-		return timePos; //moment in the timeline
-	}
-	
-	public int getP() {
-		return 1; // OR -1 according to start or end
-	}
-	
-	public int getVal() {
-		return 0;// formula
-	}
-	
-	public int getMaxVal() {
-		return 0;// formula
-	}
-	
-	Endpoint getEndpoint() {
-		return point;
-	}
-	
-	Endpoint getEmax() {
-		return null;// Endpoint owner of maxval
-	}
-	
-	int getColor() {
-		return color;
-	}
-	
+    @SuppressWarnings("unused")
+    private static final int RED = 0, BLACK = 1;
+    Node parent, left, right;
+    int timePos, color;
+    Endpoint point;
+
+    public Node(int timePos, int color, Endpoint point /*needs a shitton of parameters*/) {
+        this.timePos = timePos;
+        this.color = color;
+        this.point = point;
+        this.parent = this.left = this.right = null;
+    }
+
+    public Node getParent() {
+        return this.parent;
+    }
+
+    public Node getLeft() {
+        return this.left;
+    }
+
+    public Node getRight() {
+        return this.right;
+    }
+
+    public int getKey() {
+        return this.timePos; //moment in the timeline
+    }
+
+    public int getP() {
+        return this.point.getDir(); // OR -1 according to start or end
+    }
+
+    public int getVal() {
+        if (this.left != null) {
+            return sum(this.left);
+        } else {
+            return 1;
+        }
+    }
+
+    public int getMaxVal() {
+        Node cur = getRoot(this);
+        return getMaxSum(cur, 0);
+    }
+
+    Endpoint getEndpoint() {
+        return this.point;
+    }
+
+    Endpoint getEmax() {
+        Node cur = getRoot(this);
+        return getMaxEnd(cur, 0, cur);
+    }
+
+    int getColor() {
+        return this.color;
+    }
+
+    private int sum(Node n){
+        if (n.left == null){
+            return n.point.getDir();
+        } else {
+            return sum(n.left) + n.point.getDir() + sum(n.right);
+        }
+    }
+
+    private int getMaxSum(Node n, int max){
+        int curSum = sum(n);
+        if (curSum > max) max = curSum;
+        if (n.left != null) getMaxSum(n.left, max);
+        if (n.right != null) getMaxSum(n.right, max);
+        return max;
+    }
+
+    private Endpoint getMaxEnd(Node n, int max, Node maxNode) {
+        int curSum = sum(n);
+        if (curSum > max){
+            max = curSum;
+            maxNode = n;
+        }
+        if (n.left != null) getMaxEnd(n.left, max, maxNode);
+        if (n.right != null) getMaxEnd(n.right, max, maxNode);
+        return maxNode.point;
+    }
+
+    private Node getRoot(Node n){
+        while(n.parent != null){
+            n=n.parent;
+        }
+        n = n.right;
+        return n;
+    }
 }
