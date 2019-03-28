@@ -7,8 +7,9 @@
  */
 public class RBTree {
     private static final int RED = 0, BLACK = 1;
-    private Node Nil = new Node();
+    private Node Nil = new Node(), maxNode = new Node(null);
     private Node Root = Nil;
+    private int treeDepth;
 
     /**
      * Class begins with a null Root and a reference to a Nil node, which
@@ -18,6 +19,7 @@ public class RBTree {
         Root.parent = Root;
         Root.left = null;
         Root.right = null;
+        Root.point = new Endpoint(-1, -1, 0);
     }
 
     public boolean isEmpty() {
@@ -42,13 +44,13 @@ public class RBTree {
         if (isEmpty()) {
             return 0;
         } else {
-            return Depth(Root.right, 1);
+            return treeDepth;
         }
     }
 
     protected void insertPair(Endpoint beg, Endpoint end) {
-    	//According to book, nodes to be inserted need to begin as red
-        Node left = new Node(beg); 
+        //According to book, nodes to be inserted need to begin as red
+        Node left = new Node(beg);
         Node right = new Node(end);
         insert(left);
         insert(right);
@@ -62,10 +64,34 @@ public class RBTree {
         if (lDepth >= rDepth) return lDepth;
         else return rDepth;
     }
-    
-    
+
 
     private void insert(Node right) {
 
+    }
+
+    private void recalculate() {
+        Node cur = Root.right;
+        if (cur != null){
+            recalcTrav(cur);
+            maxNode = cur.getMaxNode(cur, cur);
+            Depth(Root.right, 1);
+        }
+    }
+
+    private void recalcTrav(Node cur) {
+        cur.point.setContainNum(cur.nodeSum(cur));
+        if (cur.left != null)
+            recalcTrav(cur.left);
+        if (cur.right != null)
+            recalcTrav(cur.right);
+    }
+
+    public int getMaxVal(){
+        return maxNode.point.getContainNum();
+    }
+
+    public Node getMaxNode() {
+        return maxNode;
     }
 }

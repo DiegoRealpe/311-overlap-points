@@ -51,15 +51,10 @@ public class Node {
 
     public int getVal() {
         if (this.left != null) {
-            return sum(this.left);
+            return nodeSum(this.left);
         } else {
             return 1;
         }
-    }
-
-    public int getMaxVal() {
-        Node cur = getRoot(this);
-        return getMaxSum(cur, 0);
     }
 
     Endpoint getEndpoint() {
@@ -68,38 +63,35 @@ public class Node {
 
     Endpoint getEmax() {
         Node cur = getRoot(this);
-        return getMaxEnd(cur, 0, cur);
+        if (cur.right != null) {
+            cur = cur.right;
+            return getMaxNode(cur, cur).point;
+        }
+        else return null;
     }
 
     int getColor() {
         return this.color;
     }
 
-    private int sum(Node n){
+    public int nodeSum(Node n){
         if (n.left == null){
             return n.point.getDir();
         } else {
-            return sum(n.left) + n.point.getDir() + sum(n.right);
+            return nodeSum(n.left) + n.point.getDir() + nodeSum(n.right);
         }
     }
 
-    private int getMaxSum(Node n, int max){
-        int curSum = sum(n);
-        if (curSum > max) max = curSum;
-        if (n.left != null) getMaxSum(n.left, max);
-        if (n.right != null) getMaxSum(n.right, max);
-        return max;
-    }
-
-    private Endpoint getMaxEnd(Node n, int max, Node maxNode) {
-        int curSum = sum(n);
-        if (curSum > max){
-            max = curSum;
+    public Node getMaxNode(Node n, Node maxNode) {
+        if (n.point.getContainNum() >= maxNode.point.getContainNum()
+                && n.point.getValue() <= maxNode.point.getValue()){
             maxNode = n;
         }
-        if (n.left != null) getMaxEnd(n.left, max, maxNode);
-        if (n.right != null) getMaxEnd(n.right, max, maxNode);
-        return maxNode.point;
+        Node lnode = new Node(), rnode = new Node();
+        if (n.left != null) lnode = getMaxNode(n.left, maxNode);
+        if (n.right != null) rnode = getMaxNode(n.right, maxNode);
+        if (lnode.point.getContainNum() >= rnode.point.getContainNum()) return lnode;
+        else return rnode;
     }
 
     private Node getRoot(Node n){
