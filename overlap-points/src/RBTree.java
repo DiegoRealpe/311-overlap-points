@@ -143,9 +143,47 @@ public class RBTree {
 		insert(right);
 	}
 
+	/**
+	 * Method that performs a normal BST insertion
+	 * Balances in the end
+	 * @param n
+	 */
 	private void insert(Node n) {
+		Node previous = Nil;
+		Node traverse = Root;
 
+		//Iterate down the tree to leaf where n belongs
+		while(traverse != Nil) {
+			previous = traverse;
+			if(n.getKey() < traverse.getKey()) {
+				traverse = traverse.left;
+			}
+			else {
+				traverse = traverse.right;
+			}
+		}
+		
+		n.parent = previous; //Give inserted node a Daddy
+		//Update Daddy, set it as a L or R child or if it is the Root
+		if(previous == Nil) {//if parent is Nil, then it must be the Root
+			Root = n; //Assign to Root
+		}
+		else if(n.getKey() < previous.getKey()) {
+			previous.left = n; //Assign to left
+		}
+		else {
+			previous.right = n; //Assign to right
+		}
+		
+		//Default Nil assignments to n children and color done in constructor
+		
+		RB_Insert_Fixup(n);
 	}
+	
+	private void RB_Insert_Fixup(Node n){
+		 //TODO
+	}
+	
 	
 	/**
 	 * Rotates a node to the left
