@@ -9,7 +9,12 @@ public class RBTree {
 	@SuppressWarnings("unused")
 	private static final int RED = 0, BLACK = 1;
 	private final Node Nil = new Node();
-    private Node Root = Nil, maxNode = new Node();
+    private Node Root = Nil;
+    
+    /**
+     * Explain the function of a Nil maxNode?
+     */
+    private Node maxNode = new Node();
 
     /**
      * Class begins with a null Root and a reference to a Nil node, which
@@ -95,6 +100,41 @@ public class RBTree {
 		}
 	}
 
+	
+	//-----------------------Adrian's protected methods
+	
+	/**
+	 * Note: MaxVal and MaxNode should not need additional methods
+	 * they should be present in the Root's emax and maxval fields
+	 */
+	
+	/*protected int getMaxVal(){
+        return maxNode.point.getContainNum();
+    }*/
+
+    /*protected Node getMaxNode() {
+        return maxNode;
+    }*/
+	
+	@SuppressWarnings("unused")
+	private void recalculate() {
+        Node cur = Root.right;// Don't use Root.right
+        if (cur != null){
+            recalcTrav(cur);
+            maxNode = cur.getMaxNode(cur, cur);
+        }
+    }
+
+    private void recalcTrav(Node cur) {
+        cur.point.setContainNum(cur.nodeSum(cur));
+        if (cur.left != null)
+            recalcTrav(cur.left);
+        if (cur.right != null)
+            recalcTrav(cur.right);
+    }
+
+	//-----------------------RBT Algorithms 
+    
 	protected void insertPair(Endpoint beg, Endpoint end) {
 		// According to book, nodes to be inserted need to begin as RED
 		Node left = new Node(beg, Nil);
@@ -103,9 +143,7 @@ public class RBTree {
 		insert(right);
 	}
 
-	//-----------------------RBT Algorithms 
-
-	private void insert(Node right) {
+	private void insert(Node n) {
 
 	}
 	
@@ -178,28 +216,4 @@ public class RBTree {
 		axis.parent = newAxis;
 	}
 
-    @SuppressWarnings("unused")
-	private void recalculate() {
-        Node cur = Root.right;
-        if (cur != null){
-            recalcTrav(cur);
-            maxNode = cur.getMaxNode(cur, cur);
-        }
-    }
-
-    private void recalcTrav(Node cur) {
-        cur.point.setContainNum(cur.nodeSum(cur));
-        if (cur.left != null)
-            recalcTrav(cur.left);
-        if (cur.right != null)
-            recalcTrav(cur.right);
-    }
-
-    public int getMaxVal(){
-        return maxNode.point.getContainNum();
-    }
-
-    public Node getMaxNode() {
-        return maxNode;
-    }
 }

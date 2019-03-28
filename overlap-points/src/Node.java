@@ -6,7 +6,12 @@
 public class Node {
 
 	private static final int RED = 0, BLACK = 1;
-	// variables that shouldn't change (timePos a.k.a Key)
+	
+	/**
+	 * TODO: Eventually delete this variable, it is redundant
+	 * it references the same value as point.getValue()
+	 * timepos = Node.Key = point in the timeline
+	 */
 	private int timePos;
 	protected Endpoint point;
 
@@ -85,6 +90,8 @@ public class Node {
 		//returns whatever Adrian's logic does
 		return 0;
 	}
+	
+	//----------------------Our Custom protected methods
 
     protected int nodeSum(Node n){
         if (n.left == null){

@@ -45,6 +45,8 @@ public class Endpoint {
     protected int getDir() {
         return direction;
     }
+    
+    //------------------Adrian's Protected Methods
 
     /**
      * sets the number of intervals that the node is in
