@@ -1,4 +1,4 @@
-import javax.swing.*;
+
 
 /**
  * Class representing the Self Balancing tree of endpoints
@@ -7,8 +7,13 @@ import javax.swing.*;
  */
 public class RBTree {
     private static final int RED = 0, BLACK = 1;
-    private Node Root = new Node(-1, -1, null);
+    private Node Nil = new Node();
+    private Node Root = Nil;
 
+    /**
+     * Class begins with a null Root and a reference to a Nil node, which
+     * marks the last endpoint. As it is empty Root and Nil point to the same null
+     */
     public RBTree() {
         Root.parent = Root;
         Root.left = null;
@@ -42,8 +47,9 @@ public class RBTree {
     }
 
     protected void insertPair(Endpoint beg, Endpoint end) {
-        Node left = new Node(beg.getValue(), BLACK, beg);
-        Node right = new Node(end.getValue(), BLACK, end);
+    	//According to book, nodes to be inserted need to begin as red
+        Node left = new Node(beg); 
+        Node right = new Node(end);
         insert(left);
         insert(right);
     }
@@ -56,6 +62,8 @@ public class RBTree {
         if (lDepth >= rDepth) return lDepth;
         else return rDepth;
     }
+    
+    
 
     private void insert(Node right) {
 

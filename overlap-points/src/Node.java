@@ -5,17 +5,28 @@
  */
 public class Node {
 
-    @SuppressWarnings("unused")
     private static final int RED = 0, BLACK = 1;
     Node parent, left, right;
+    //timePos a.k.a Key 
     int timePos, color;
     Endpoint point;
 
-    public Node(int timePos, int color, Endpoint point /*needs a shitton of parameters*/) {
-        this.timePos = timePos;
-        this.color = color;
+    /**
+     * Creates a valid node with default RED color ready to be inserted
+     * @param point
+     */
+    public Node(Endpoint point) {
+        this.timePos = point.getValue();
+        this.color = RED;
         this.point = point;
         this.parent = this.left = this.right = null;
+    }
+    
+    /**
+     * Creates an invalid Nil Node
+     */
+    public Node() {
+    	this.color = BLACK;
     }
 
     public Node getParent() {
@@ -35,7 +46,7 @@ public class Node {
     }
 
     public int getP() {
-        return this.point.getDir(); // OR -1 according to start or end
+        return this.point.getDir(); // +1 OR -1 according to start or end
     }
 
     public int getVal() {
@@ -95,7 +106,7 @@ public class Node {
         while(n.parent != null){
             n=n.parent;
         }
-        n = n.right;
+        n = n.right; //why n.right?
         return n;
     }
 }

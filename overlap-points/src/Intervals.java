@@ -26,8 +26,14 @@ public class Intervals {
         return false; //this probably aint gonna change
     }
 
+    /**
+     * Returns the value of the Endpoint with highest overlap
+     * NOT necessarily the root. but instead returns the emax of the
+     * entire tree, found in root
+     * @return
+     */
     public int findPOM() {
-        return intervalTree.getRoot().getKey();
+        return intervalTree.getRoot().getMaxVal();
     }
 
     public RBTree getRBTree() {
