@@ -180,8 +180,12 @@ public class RBTree {
 		RB_Insert_Fixup(n);
 	}
 	
+	/**
+	 * Method fixes a violation of the Red-Black properties that can arise from inserting
+	 * a red node into the tree. R3 - Red cannot be child of Red or Root cannot be Red
+	 * @param n
+	 */
 	private void RB_Insert_Fixup(Node n){
-		 //TODO
 		//Inserted node is RED by default, so it cant break the black path property
 		//Only property it can break is being child of a RED
 		//while loop checks against that
@@ -209,8 +213,27 @@ public class RBTree {
 					rotateRight(n.parent.parent);//axis
 				}
 			}
-			else {
-				//TODO symmetrical for other uncle
+			else { //else, red parent is a right child
+				Node uncle = n.parent.parent.left;
+				//Case 1
+				if(uncle.color == RED) {
+					n.parent.color = BLACK;
+					uncle.color = BLACK;
+					n.parent.parent.color = RED;
+					n = n.parent.parent; //Move pointer up 2 and rerun loop
+				}
+				//Case 2 & 3
+				else {
+					//Case 2: Fix > shape into \ shape
+					if(n == n.parent.left) { 
+						n = n.parent;
+						rotateRight(n);
+					}
+					//Recolor to be R-B-R
+					n.parent.color = BLACK;
+					n.parent.parent.color = RED;
+					rotateLeft(n.parent.parent);
+				}
 			}
 		}
 		//Asserts property 2 in case it got recolored
@@ -223,7 +246,6 @@ public class RBTree {
 	 * Rotates a node to the left
 	 * @param axis
 	 */
-	@SuppressWarnings("unused")
 	private void rotateLeft(Node axis) {
 		if(axis.left == Nil) {
 			System.out.println("Rotate Left Error, Nil newAxis");
@@ -258,7 +280,6 @@ public class RBTree {
 	 * Rotates a node to the right
 	 * @param axis
 	 */
-	@SuppressWarnings("unused")
 	private void rotateRight(Node axis) {
 		if(axis.left == Nil) {
 			System.out.println("Rotate Right Error, Nil newAxis");
