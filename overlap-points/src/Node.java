@@ -6,20 +6,23 @@
 public class Node {
 
     private static final int RED = 0, BLACK = 1;
-    Node parent, left, right;
-    //timePos a.k.a Key 
-    int timePos, color;
-    Endpoint point;
+    //variables that shouldn't change (timePos a.k.a Key)
+    private int timePos;
+    private Endpoint point;
+    
+    //variables that can change
+    protected Node parent, left, right;
+    protected int color;
 
     /**
      * Creates a valid node with default RED color ready to be inserted
      * @param point
      */
-    public Node(Endpoint point) {
+    public Node(Endpoint point, Node TNil) {
         this.timePos = point.getValue();
         this.color = RED;
         this.point = point;
-        this.parent = this.left = this.right = null;
+        this.parent = this.left = this.right = TNil;
     }
     
     /**

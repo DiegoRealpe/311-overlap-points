@@ -7,7 +7,7 @@
  */
 public class RBTree {
     private static final int RED = 0, BLACK = 1;
-    private Node Nil = new Node();
+    private final Node Nil = new Node();
     private Node Root = Nil;
 
     /**
@@ -32,10 +32,26 @@ public class RBTree {
         return null;
     }
 
+    /**
+     * Performs an inorder traversal and counts internal nodes
+     * @return
+     */
     public int getSize() {
-        Node cur = Root;
-        while (cur.right != null) cur = cur.right;
-        return cur.point.getID();
+    	if(Root != Nil)
+    		return countPostorder(Root);
+    	return 0;
+    }
+    
+    private int countPostorder(Node n) {
+    	if(n.left == Nil && n.right == Nil) {
+    		return 1;
+    	}
+    	else {
+    		if(n.left != Nil) {
+    			//TODO
+    		}
+    		return 0;
+    	}
     }
 
     public int getHeight() {
@@ -48,8 +64,8 @@ public class RBTree {
 
     protected void insertPair(Endpoint beg, Endpoint end) {
     	//According to book, nodes to be inserted need to begin as red
-        Node left = new Node(beg); 
-        Node right = new Node(end);
+        Node left = new Node(beg, Nil); 
+        Node right = new Node(end, Nil);
         insert(left);
         insert(right);
     }
