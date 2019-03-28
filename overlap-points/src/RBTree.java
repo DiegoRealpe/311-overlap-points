@@ -6,13 +6,12 @@
  * @author diegort, adrianh
  */
 public class RBTree {
-	@SuppressWarnings("unused")
 	private static final int RED = 0, BLACK = 1;
 	private final Node Nil = new Node();
     private Node Root = Nil;
     
     /**
-     * Explain the function of a Nil maxNode?
+     * Explain the function of a Nil maxNode? I think it should be removed.
      */
     private Node maxNode = new Node();
 
@@ -176,12 +175,47 @@ public class RBTree {
 		}
 		
 		//Default Nil assignments to n children and color done in constructor
+		//TODO Calculate new node's emax, maxval, val
 		
 		RB_Insert_Fixup(n);
 	}
 	
 	private void RB_Insert_Fixup(Node n){
 		 //TODO
+		//Inserted node is RED by default, so it cant break the black path property
+		//Only property it can break is being child of a RED
+		//while loop checks against that
+		while(n.parent.color == RED) {
+			if(n.parent == n.parent.parent.left) {
+				Node uncle = n.parent.parent.right;
+				//Case 1: Recolor
+				if(uncle.color == RED) {//Recolor uncle, n.p and n to hold amount of nodes
+					n.parent.color = BLACK;
+					uncle.color = BLACK;
+					n.parent.parent.color = RED;
+					n = n.parent.parent; //Move pointer up 2 and rerun loop
+				}
+				//Case 2 & 3: Restructure (Only runs once)
+				else {
+					//Case 2: Fix < shape into / shape
+					if(n == n.parent.right) { 
+						n = n.parent; //Set shoulder as axis
+						rotateLeft(n);
+					}
+					//Case 3: Rotate / shape into ^ shape
+					//Child is assumed to be RED
+					n.parent.color = BLACK; //newAxis needs to be BLACK after rotation to stay balanced
+					n.parent.parent.color = RED; //new right child has to be RED to not mess up balance
+					rotateRight(n.parent.parent);//axis
+				}
+			}
+			else {
+				//TODO symmetrical for other uncle
+			}
+		}
+		//Asserts property 2 in case it got recolored
+		//setting it to black cannot break black path propery either
+		Root.color = BLACK;
 	}
 	
 	
