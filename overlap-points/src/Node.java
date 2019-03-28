@@ -1,53 +1,57 @@
 /**
  * Node unit of the Red Black tree
  *
- * @author diegort
+ * @author diegort, adrianh
  */
 public class Node {
 
-    private static final int RED = 0, BLACK = 1;
-    Node parent, left, right;
-    //timePos a.k.a Key 
-    int timePos, color;
-    Endpoint point;
+	private static final int RED = 0, BLACK = 1;
+	// variables that shouldn't change (timePos a.k.a Key)
+	private int timePos;
+	private Endpoint point;
 
-    /**
-     * Creates a valid node with default RED color ready to be inserted
-     * @param point
-     */
-    public Node(Endpoint point) {
-        this.timePos = point.getValue();
-        this.color = RED;
-        this.point = point;
-        this.parent = this.left = this.right = null;
-    }
-    
-    /**
-     * Creates an invalid Nil Node
-     */
-    public Node() {
-    	this.color = BLACK;
-    }
+	// variables that can change
+	protected Node parent, left, right;
+	protected int color;
 
-    public Node getParent() {
-        return this.parent;
-    }
+	/**
+	 * Creates a valid node with default RED color ready to be inserted
+	 *
+	 * @param point
+	 */
+	public Node(Endpoint point, Node TNil) {
+		this.timePos = point.getValue();
+		this.color = RED;
+		this.point = point;
+		this.parent = this.left = this.right = TNil;
+	}
 
-    public Node getLeft() {
-        return this.left;
-    }
+	/**
+	 * Creates an invalid Nil Node
+	 */
+	public Node() {
+		this.color = BLACK;
+	}
 
-    public Node getRight() {
-        return this.right;
-    }
+	public Node getParent() {
+		return this.parent;
+	}
 
-    public int getKey() {
-        return this.timePos; //moment in the timeline
-    }
+	public Node getLeft() {
+		return this.left;
+	}
 
-    public int getP() {
-        return this.point.getDir(); // +1 OR -1 according to start or end
-    }
+	public Node getRight() {
+		return this.right;
+	}
+
+	public int getKey() {
+		return this.timePos; // moment in the timeline
+	}
+
+	public int getP() {
+		return this.point.getDir(); // +1 OR -1 according to start or end
+	}
 
     public int getVal() {
         if (this.left != null) {
@@ -70,9 +74,9 @@ public class Node {
         else return null;
     }
 
-    int getColor() {
-        return this.color;
-    }
+	int getColor() {
+		return this.color;
+	}
 
     public int nodeSum(Node n){
         if (n.left == null){
@@ -94,11 +98,11 @@ public class Node {
         else return rnode;
     }
 
-    private Node getRoot(Node n){
-        while(n.parent != null){
-            n=n.parent;
-        }
-        n = n.right; //why n.right?
-        return n;
-    }
+	private Node getRoot(Node n) {
+		while (n.parent != null) {
+			n = n.parent;
+		}
+		n = n.right; // why n.right?
+		return n;
+	}
 }

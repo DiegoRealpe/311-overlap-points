@@ -18,24 +18,24 @@ public class Endpoint {
         this.containNum = 0;
     }
 
-    /**
-     * returns the value of the line at this endpoint.
-     * a.k.a the position of the endpoint in the line
-     *
-     * @return endpoint position
-     */
-    public int getValue() {
-        return position;
-    }
+	/**
+	 * returns the value of the line at this endpoint. a.k.a the position of the
+	 * endpoint in the line
+	 *
+	 * @return endpoint position
+	 */
+	public int getValue() {
+		return position;
+	}
 
-    /**
-     * returns the associated interval ID with this endpoint
-     *
-     * @return ID
-     */
-    protected int getID() {
-        return ID;
-    }
+	/**
+	 * returns the associated interval ID with this endpoint
+	 *
+	 * @return ID
+	 */
+	protected int getID() {
+		return ID;
+	}
 
     /**
      * returns if this endpoint is a start or and end

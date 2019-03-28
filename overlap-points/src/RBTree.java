@@ -3,13 +3,13 @@
 /**
  * Class representing the Self Balancing tree of endpoints
  *
- * @author diegort
+ * @author diegort, adrianh
  */
 public class RBTree {
-    private static final int RED = 0, BLACK = 1;
-    private Node Nil = new Node(), maxNode = new Node(null);
+	@SuppressWarnings("unused")
+	private static final int RED = 0, BLACK = 1;
+	private final Node Nil = new Node(), maxNode = new Node(null);
     private Node Root = Nil;
-    private int treeDepth;
 
     /**
      * Class begins with a null Root and a reference to a Nil node, which
@@ -22,51 +22,93 @@ public class RBTree {
         Root.point = new Endpoint(-1, -1, 0);
     }
 
-    public boolean isEmpty() {
-        return Root.right == null;
-    }
+	public boolean isEmpty() {
+		return Root == Nil;
+	}
 
-    public Node getRoot() {
-        return Root;
-    }
+	public Node getRoot() {
+		return Root;
+	}
 
-    public Node getNINode() {
-        return null;
-    }
+	public Node getNILNode() {
+		return Nil;
+	}
 
-    public int getSize() {
-        Node cur = Root;
-        while (cur.right != null) cur = cur.right;
-        return cur.point.getID();
-    }
+	/**
+	 * Performs a recusive traversal and counts internal nodes
+	 * @return
+	 */
+	public int getSize() {
+		if (!isEmpty())
+			return recCount(Root);
+		return 0;
+	}
 
-    public int getHeight() {
-        if (isEmpty()) {
-            return 0;
-        } else {
-            return treeDepth;
-        }
-    }
+	/**
+	 * base: if n is leaf, counts 1
+	 * step: returns 1(itself) + left nodes + right nodes
+	 * @param n
+	 * @return
+	 */
+	private int recCount(Node n) {
+		if (n.left == Nil && n.right == Nil) {
+			return 1;
+		} else {
+			int nodeCount = 1;
+			if (n.left != Nil) {
+				nodeCount += recCount(n.left);
+			}
+			if(n.right != Nil) {
+				nodeCount += recCount(n.right);
+			}
+			return nodeCount;
+		}
+	}
 
-    protected void insertPair(Endpoint beg, Endpoint end) {
-        //According to book, nodes to be inserted need to begin as red
-        Node left = new Node(beg);
-        Node right = new Node(end);
-        insert(left);
-        insert(right);
-    }
+	/**
+	 * Performs a recursive traversal and obtains the longest simple path
+	 * @return
+	 */
+	public int getHeight() {
+		if (!isEmpty()) {
+			return recDepth(Root);
+		}
+		return 0;
+	}
 
-    private int Depth(Node n, int depth) {
-        if (n == null) return depth--;
-        int lDepth = Depth(n.left, depth++);
-        int rDepth = Depth(n.right, depth++);
+	/**
+	 * base: if non Nil node with only Nil children, height 1
+	 * step: returns 1(itself) + Max between left and right depths
+	 * @param n
+	 * @return
+	 */
+	private int recDepth(Node n) {
+		if (n.left == Nil && n.right == Nil) {
+			return 1;
+		} else {
+			//PS: Nil nodes are height 0
+			int lDepth = 0, rDepth = 0;
+			if (n.left != Nil) {
+				lDepth = recDepth(n.left);
+			}
+			if(n.right != Nil) {
+				rDepth = recDepth(n.right);
+			}
+			return Math.max(lDepth, rDepth) + 1;
+		}
+	}
 
-        if (lDepth >= rDepth) return lDepth;
-        else return rDepth;
-    }
+	protected void insertPair(Endpoint beg, Endpoint end) {
+		// According to book, nodes to be inserted need to begin as RED
+		Node left = new Node(beg, Nil);
+		Node right = new Node(end, Nil);
+		insert(left);
+		insert(right);
+	}
 
+	//-----------------------RBT Algorithms
 
-    private void insert(Node right) {
+	private void insert(Node right) {
 
     }
 
@@ -75,7 +117,6 @@ public class RBTree {
         if (cur != null){
             recalcTrav(cur);
             maxNode = cur.getMaxNode(cur, cur);
-            Depth(Root.right, 1);
         }
     }
 
