@@ -8,8 +8,8 @@
 public class RBTree {
 	@SuppressWarnings("unused")
 	private static final int RED = 0, BLACK = 1;
-	private final Node Nil = new Node(), maxNode = new Node(null);
-    private Node Root = Nil;
+	private final Node Nil = new Node();
+    private Node Root = Nil, maxNode = new Node();
 
     /**
      * Class begins with a null Root and a reference to a Nil node, which

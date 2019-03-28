@@ -8,7 +8,7 @@ public class Node {
 	private static final int RED = 0, BLACK = 1;
 	// variables that shouldn't change (timePos a.k.a Key)
 	private int timePos;
-	private Endpoint point;
+	protected Endpoint point;
 
 	// variables that can change
 	protected Node parent, left, right;
