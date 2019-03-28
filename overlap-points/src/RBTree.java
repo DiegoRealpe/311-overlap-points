@@ -1,4 +1,5 @@
 
+
 /**
  * Class representing the Self Balancing tree of endpoints
  *
@@ -8,14 +9,15 @@ public class RBTree {
 	@SuppressWarnings("unused")
 	private static final int RED = 0, BLACK = 1;
 	private final Node Nil = new Node();
-	private Node Root = Nil;
+    private Node Root = Nil, maxNode = new Node();
 
-	public RBTree() {
-		/**
-		 * Class begins with a null Root and a reference to a Nil node, which marks the
-		 * last end point. As it is empty Root and Nil point to the same null
-		 */
-	}
+    /**
+     * Class begins with a null Root and a reference to a Nil node, which
+     * marks the last endpoint. As it is empty Root and Nil point to the same null
+     */
+    public RBTree() {
+    	//Root parent, left and right child point to Nil
+    }
 
 	public boolean isEmpty() {
 		return Root == Nil;
@@ -70,7 +72,7 @@ public class RBTree {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * base: if non Nil node with only Nil children, height 1
 	 * step: returns 1(itself) + Max between left and right depths
@@ -175,4 +177,29 @@ public class RBTree {
 		newAxis.right = axis;
 		axis.parent = newAxis;
 	}
+
+    @SuppressWarnings("unused")
+	private void recalculate() {
+        Node cur = Root.right;
+        if (cur != null){
+            recalcTrav(cur);
+            maxNode = cur.getMaxNode(cur, cur);
+        }
+    }
+
+    private void recalcTrav(Node cur) {
+        cur.point.setContainNum(cur.nodeSum(cur));
+        if (cur.left != null)
+            recalcTrav(cur.left);
+        if (cur.right != null)
+            recalcTrav(cur.right);
+    }
+
+    public int getMaxVal(){
+        return maxNode.point.getContainNum();
+    }
+
+    public Node getMaxNode() {
+        return maxNode;
+    }
 }

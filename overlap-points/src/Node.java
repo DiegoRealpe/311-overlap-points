@@ -8,7 +8,7 @@ public class Node {
 	private static final int RED = 0, BLACK = 1;
 	// variables that shouldn't change (timePos a.k.a Key)
 	private int timePos;
-	private Endpoint point;
+	protected Endpoint point;
 
 	// variables that can change
 	protected Node parent, left, right;
@@ -16,7 +16,7 @@ public class Node {
 
 	/**
 	 * Creates a valid node with default RED color ready to be inserted
-	 * 
+	 *
 	 * @param point
 	 */
 	public Node(Endpoint point, Node TNil) {
@@ -56,63 +56,55 @@ public class Node {
 		return this.point.getDir(); // +1 OR -1 according to start or end
 	}
 
-	public int getVal() {
-		if (this.left != null) {
-			return sum(this.left);
-		} else {
-			return 1;
-		}
-	}
+    public int getVal() {
+        if (this.left != null) {
+            return nodeSum(this.left);
+        } else {
+            return 1;
+        }
+    }
 
-	public int getMaxVal() {
-		Node cur = getRoot(this);
-		return getMaxSum(cur, 0);
-	}
+    public Endpoint getEndpoint() {
+        return this.point;
+    }
 
-	Endpoint getEndpoint() {
-		return this.point;
-	}
+    public Endpoint getEmax() {
+        Node cur = getRoot(this);
+        if (cur.right != null) {
+            cur = cur.right;
+            return getMaxNode(cur, cur).point;
+        }
+        else return null;
+    }
 
-	Endpoint getEmax() {
-		Node cur = getRoot(this);
-		return getMaxEnd(cur, 0, cur);
-	}
-
-	int getColor() {
+	public int getColor() {
 		return this.color;
 	}
-
-	private int sum(Node n) {
-		if (n.left == null) {
-			return n.point.getDir();
-		} else {
-			return sum(n.left) + n.point.getDir() + sum(n.right);
-		}
+	
+	public int getMaxVal() {
+		//returns whatever Adrian's logic does
+		return 0;
 	}
 
-	private int getMaxSum(Node n, int max) {
-		int curSum = sum(n);
-		if (curSum > max)
-			max = curSum;
-		if (n.left != null)
-			getMaxSum(n.left, max);
-		if (n.right != null)
-			getMaxSum(n.right, max);
-		return max;
-	}
+    protected int nodeSum(Node n){
+        if (n.left == null){
+            return n.point.getDir();
+        } else {
+            return nodeSum(n.left) + n.point.getDir() + nodeSum(n.right);
+        }
+    }
 
-	private Endpoint getMaxEnd(Node n, int max, Node maxNode) {
-		int curSum = sum(n);
-		if (curSum > max) {
-			max = curSum;
-			maxNode = n;
-		}
-		if (n.left != null)
-			getMaxEnd(n.left, max, maxNode);
-		if (n.right != null)
-			getMaxEnd(n.right, max, maxNode);
-		return maxNode.point;
-	}
+    protected Node getMaxNode(Node n, Node maxNode) {
+        if (n.point.getContainNum() >= maxNode.point.getContainNum()
+                && n.point.getValue() <= maxNode.point.getValue()){
+            maxNode = n;
+        }
+        Node lnode = new Node(), rnode = new Node();
+        if (n.left != null) lnode = getMaxNode(n.left, maxNode);
+        if (n.right != null) rnode = getMaxNode(n.right, maxNode);
+        if (lnode.point.getContainNum() >= rnode.point.getContainNum()) return lnode;
+        else return rnode;
+    }
 
 	private Node getRoot(Node n) {
 		while (n.parent != null) {
