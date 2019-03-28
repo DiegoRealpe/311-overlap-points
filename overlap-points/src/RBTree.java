@@ -30,53 +30,78 @@ public class RBTree {
 	}
 
 	/**
-	 * Performs an inorder traversal and counts internal nodes
-	 * 
+	 * Performs a recusive traversal and counts internal nodes
 	 * @return
 	 */
 	public int getSize() {
 		if (!isEmpty())
-			return countPostorder(Root);
+			return recCount(Root);
 		return 0;
 	}
 
-	private int countPostorder(Node n) {
+	/**
+	 * base: if n is leaf, counts 1
+	 * step: returns 1(itself) + left nodes + right nodes
+	 * @param n
+	 * @return
+	 */
+	private int recCount(Node n) {
 		if (n.left == Nil && n.right == Nil) {
 			return 1;
 		} else {
+			int nodeCount = 1;
 			if (n.left != Nil) {
-				// TODO
+				nodeCount += recCount(n.left);
 			}
-			return 0;
+			if(n.right != Nil) {
+				nodeCount += recCount(n.right);
+			}
+			return nodeCount;
 		}
 	}
 
+	/**
+	 * Performs a recursive traversal and obtains the longest simple path
+	 * @return
+	 */
 	public int getHeight() {
 		if (!isEmpty()) {
-			return Depth(Root.right, 1);
+			return recDepth(Root);
 		}
 		return 0;
 	}
+	
+	/**
+	 * base: if non Nil node with only Nil children, height 1
+	 * step: returns 1(itself) + Max between left and right depths
+	 * @param n
+	 * @return
+	 */
+	private int recDepth(Node n) {
+		if (n.left == Nil && n.right == Nil) {
+			return 1;
+		} else {
+			//PS: Nil nodes are height 0
+			int lDepth = 0, rDepth = 0;
+			if (n.left != Nil) {
+				lDepth = recDepth(n.left);
+			}
+			if(n.right != Nil) {
+				rDepth = recDepth(n.right);
+			}
+			return Math.max(lDepth, rDepth) + 1;
+		}
+	}
 
 	protected void insertPair(Endpoint beg, Endpoint end) {
-		// According to book, nodes to be inserted need to begin as red
+		// According to book, nodes to be inserted need to begin as RED
 		Node left = new Node(beg, Nil);
 		Node right = new Node(end, Nil);
 		insert(left);
 		insert(right);
 	}
 
-	private int Depth(Node n, int depth) {
-		if (n == null)
-			return depth--;
-		int lDepth = Depth(n.left, depth++);
-		int rDepth = Depth(n.right, depth++);
-
-		if (lDepth >= rDepth)
-			return lDepth;
-		else
-			return rDepth;
-	}
+	//-----------------------RBT Algorithms
 
 	private void insert(Node right) {
 
