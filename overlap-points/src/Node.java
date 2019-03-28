@@ -31,6 +31,9 @@ public class Node {
 	 */
 	public Node() {
 		this.color = BLACK;
+		//Nil node points to itself
+		//Since the Root's parent is not "null", it is Nil
+		this.parent = this.left = this.right = this; 
 	}
 
 	public Node getParent() {

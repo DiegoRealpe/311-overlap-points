@@ -101,9 +101,78 @@ public class RBTree {
 		insert(right);
 	}
 
-	//-----------------------RBT Algorithms
+	//-----------------------RBT Algorithms 
 
 	private void insert(Node right) {
 
+	}
+	
+	/**
+	 * Rotates a node to the left
+	 * @param axis
+	 */
+	@SuppressWarnings("unused")
+	private void rotateLeft(Node axis) {
+		if(axis.left == Nil) {
+			System.out.println("Rotate Left Error, Nil newAxis");
+		}
+		
+		Node newAxis = axis.right;
+		
+		axis.right = newAxis.left;//give newAxis Lchild a new daddy
+		if(newAxis.left != Nil) {//tell newAxis Lchild it has a new daddy
+			newAxis.left.parent = axis;
+		}
+		
+		newAxis.parent = axis.parent;//give axis parent to newAxi
+		//3 cases for axis parent telling it has a different child
+		//it is either Nil(Root), a left or right child
+		if(axis.parent == Nil) {//if it is Root, its parent is Nil
+			Root = newAxis;//Set newAxis to Root
+		}
+		else if(axis.parent.right == axis) {
+			axis.parent.right = newAxis;
+		}
+		else{
+			axis.parent.left = newAxis;
+		}
+		
+		//Reassign target nodes references to each other
+		newAxis.left = axis;
+		axis.parent = newAxis;
+	}
+
+	/**
+	 * Rotates a node to the right
+	 * @param axis
+	 */
+	@SuppressWarnings("unused")
+	private void rotateRight(Node axis) {
+		if(axis.left == Nil) {
+			System.out.println("Rotate Right Error, Nil newAxis");
+		}
+		
+		Node newAxis = axis.left;
+		
+		axis.left = newAxis.right;//give
+		if(newAxis.right != Nil) {//if non Nil
+			newAxis.right.parent = axis;//notify
+		}
+		
+		newAxis.parent = axis.parent;//reassign parent
+		//3 cases: Notify parent
+		if(axis.parent == Nil) {
+			Root = newAxis;
+		}
+		else if(axis.parent.right == axis) {
+			axis.parent.right = newAxis;
+		}
+		else{
+			axis.parent.left = newAxis;
+		}
+		
+		//Reassign target nodes references to each other
+		newAxis.right = axis;
+		axis.parent = newAxis;
 	}
 }
