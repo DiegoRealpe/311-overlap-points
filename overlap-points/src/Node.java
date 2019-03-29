@@ -13,11 +13,11 @@ public class Node {
 	 * timepos = Node.Key = point in the timeline
 	 */
 	private int timePos;
-	protected Endpoint point;
+	protected Endpoint point, emax;
 
 	// variables that can change
 	protected Node parent, left, right;
-	protected int color;
+	protected int color, maxval, val;
 
 	/**
 	 * Creates a valid node with default RED color ready to be inserted
@@ -62,11 +62,7 @@ public class Node {
 	}
 
     public int getVal() {
-        if (this.left != null) {
-            return nodeSum(this.left);
-        } else {
-            return 1;
-        }
+		return val;
     }
 
     public Endpoint getEndpoint() {
@@ -74,12 +70,7 @@ public class Node {
     }
 
     public Endpoint getEmax() {
-        Node cur = getRoot(this);
-        if (cur.right != null) {
-            cur = cur.right;
-            return getMaxNode(cur, cur).point;
-        }
-        else return null;
+		return emax;
     }
 
 	public int getColor() {
@@ -87,37 +78,17 @@ public class Node {
 	}
 	
 	public int getMaxVal() {
-		//returns whatever Adrian's logic does
-		return 0;
+		return maxval;
 	}
-	
-	//----------------------Our Custom protected methods
 
-    protected int nodeSum(Node n){
-        if (n.left == null){
-            return n.point.getDir();
-        } else {
-            return nodeSum(n.left) + n.point.getDir() + nodeSum(n.right);
-        }
-    }
-
-    protected Node getMaxNode(Node n, Node maxNode) {
-        if (n.point.getContainNum() >= maxNode.point.getContainNum()
-                && n.point.getValue() <= maxNode.point.getValue()){
-            maxNode = n;
-        }
-        Node lnode = new Node(), rnode = new Node();
-        if (n.left != null) lnode = getMaxNode(n.left, maxNode);
-        if (n.right != null) rnode = getMaxNode(n.right, maxNode);
-        if (lnode.point.getContainNum() >= rnode.point.getContainNum()) return lnode;
-        else return rnode;
-    }
-
-	private Node getRoot(Node n) {
-		while (n.parent != null) {
-			n = n.parent;
+	public void recalculateNode(){
+		if (this.left.maxval >= this.right.maxval){
+			this.emax = this.left.emax;
+			this.maxval = this.left.maxval;
+		} else {
+			this.emax = this.right.emax;
+			this.maxval = this.right.maxval;
 		}
-		n = n.right; // why n.right?
-		return n;
+		val = this.right.val + this.left.val + this.getP();
 	}
 }

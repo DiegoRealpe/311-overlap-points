@@ -99,39 +99,6 @@ public class RBTree {
 		}
 	}
 
-	
-	//-----------------------Adrian's protected methods
-	
-	/**
-	 * Note: MaxVal and MaxNode should not need additional methods
-	 * they should be present in the Root's emax and maxval fields
-	 */
-	
-	/*protected int getMaxVal(){
-        return maxNode.point.getContainNum();
-    }*/
-
-    /*protected Node getMaxNode() {
-        return maxNode;
-    }*/
-	
-	@SuppressWarnings("unused")
-	private void recalculate() {
-        Node cur = Root.right;// Don't use Root.right
-        if (cur != null){
-            recalcTrav(cur);
-            maxNode = cur.getMaxNode(cur, cur);
-        }
-    }
-
-    private void recalcTrav(Node cur) {
-        cur.point.setContainNum(cur.nodeSum(cur));
-        if (cur.left != null)
-            recalcTrav(cur.left);
-        if (cur.right != null)
-            recalcTrav(cur.right);
-    }
-
 	//-----------------------RBT Algorithms 
     
 	protected void insertPair(Endpoint beg, Endpoint end) {
