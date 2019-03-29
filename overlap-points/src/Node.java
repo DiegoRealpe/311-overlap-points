@@ -82,6 +82,8 @@ public class Node {
 	}
 
 	public void recalculateNode(){
+		//TODO
+		//Make sure that the emax is assigned to Nil if it is the last endpoint
 		if (this.left.maxval >= this.right.maxval){
 			this.emax = this.left.emax;
 			this.maxval = this.left.maxval;
