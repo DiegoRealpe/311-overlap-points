@@ -40,6 +40,7 @@ public class Node {
 		//Nil node points to itself
 		//Since the Root's parent is not "null", it is Nil
 		this.point = null;
+		val = 0;
 		this.parent = this.left = this.right = this; 
 	}
 
