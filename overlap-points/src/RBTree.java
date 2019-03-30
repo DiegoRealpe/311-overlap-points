@@ -128,7 +128,9 @@ public class RBTree {
 				recInsert(traverse, traverse.right, n);
 			}
 			//Recursion returned with recalculated children, recalculate parent 
-			traverse.recalculateNode(); //traverse is never Nil here
+			traverse.recalculateVal();
+			traverse.recalculateEmax();
+			traverse.recalculateMaxval(); //traverse is never Nil here
 			return;
 		} 
 		else { // base
@@ -145,7 +147,9 @@ public class RBTree {
 			 * Constructor already assigned Nil children and RED color for new node Adrian's
 			 * function calculates other values for new leaf node
 			 */
-			n.recalculateNode();
+			n.recalculateVal();
+			n.recalculateEmax();
+			n.recalculateMaxval();
 			return; //returns back to the root and recalculates parent nodes as it goes up
 		}
 	}
@@ -244,9 +248,17 @@ public class RBTree {
 		axis.parent = newAxis;
 
 		// After every rotation, recalculate the three nodes that were affected
-		newAxis.right.recalculateNode();
-		newAxis.left.recalculateNode();
-		newAxis.recalculateNode();
+		newAxis.right.recalculateVal();
+		newAxis.right.recalculateEmax();
+		newAxis.right.recalculateMaxval();
+
+		newAxis.left.recalculateVal();
+		newAxis.left.recalculateEmax();
+		newAxis.left.recalculateMaxval();
+
+		newAxis.recalculateVal();
+		newAxis.recalculateEmax();
+		newAxis.recalculateMaxval();
 	}
 
 	/**
@@ -281,9 +293,17 @@ public class RBTree {
 		axis.parent = newAxis;
 
 		// After every rotation, recalculate the three nodes that were affected
-		newAxis.right.recalculateNode();
-		newAxis.left.recalculateNode();
-		newAxis.recalculateNode();
+		newAxis.right.recalculateVal();
+		newAxis.right.recalculateEmax();
+		newAxis.right.recalculateMaxval();
+
+		newAxis.left.recalculateVal();
+		newAxis.left.recalculateEmax();
+		newAxis.left.recalculateMaxval();
+
+		newAxis.recalculateVal();
+		newAxis.recalculateEmax();
+		newAxis.recalculateMaxval();
 	}
 
 }
