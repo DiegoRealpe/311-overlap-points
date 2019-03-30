@@ -85,16 +85,21 @@ public class Node {
 		//Make sure that the emax is assigned to Nil if it is the last endpoint
 		//I can't assign a node Nill to an endpoint emax
 		if (point != null){
+			val = point.getDir();
+			if (left.point != null)
+				val += left.val;
+			if (right.point != null)
+				val += right.val;
+
+
 			if (left.point == null && right.point == null){
 				emax = point;
-				val = point.getDir();
 				if (val < 0){
 					maxval = 0;
 				} else {
 					maxval = emax.getDir();
 				}
 			} else if (left.point != null && right.point == null){
-				val = left.val + point.getDir();
 				if (left.maxval >= val){
 					maxval = left.maxval;
 					emax = left.emax;
@@ -104,7 +109,6 @@ public class Node {
 					emax = point;
 				}
 			} else if (this.left.point == null){
-				val = right.val + point.getDir();
 				if (right.maxval > val){
 					maxval = right.maxval;
 					emax = right.emax;
@@ -114,7 +118,6 @@ public class Node {
 					emax = point;
 				}
 			} else {
-				val = left.val + right.val + point.getDir();
 				if (left.maxval >= val && left.maxval >= right.maxval){
 					maxval = left.maxval;
 					emax = left.emax;
