@@ -107,7 +107,7 @@ public class RBTree {
 	 * First call of a recursive insertion algorithms
 	 * @param n
 	 */
-	private void insert(Node n) {
+	protected void insert(Node n) {
 		recInsert(Nil, Root, n);
 		RB_Insert_Fixup(n);
 	}
