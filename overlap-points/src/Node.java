@@ -87,10 +87,11 @@ public class Node {
 		if (point != null){
 			if (left.point == null && right.point == null){
 				emax = point;
-				if (point.getDir() < 0){
-					val = maxval = 0;
+				val = point.getDir();
+				if (val < 0){
+					maxval = 0;
 				} else {
-					val = maxval = emax.getDir();
+					maxval = emax.getDir();
 				}
 			} else if (left.point != null && right.point == null){
 				val = left.val + point.getDir();

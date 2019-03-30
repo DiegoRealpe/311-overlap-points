@@ -39,7 +39,7 @@ public class IntervalsTest {
     @org.junit.Test
     public void findPOM() throws Exception {
         /**
-         *      0   1   2   3   4   5   6   7   8   9   10
+         *      1   2   3   4   5   6   7   8   9   10  11
          *      |---|---|---|---|---|---|---|---|---|---|
          *      e1--------------------------------------e2
          *          e3------------------------------e4
@@ -48,11 +48,11 @@ public class IntervalsTest {
          *                      e9------e10
          */
         test = new Intervals();
-        test.intervalInsert(0, 10);
-        test.intervalInsert(1, 9);
-        test.intervalInsert(2, 8);
-        test.intervalInsert(3, 7);
-        test.intervalInsert(4, 6);
+        test.intervalInsert(1, 11);
+        test.intervalInsert(2, 10);
+        test.intervalInsert(3, 9);
+        test.intervalInsert(4, 8);
+        test.intervalInsert(5, 7);
         assertEquals(5, test.findPOM());
     }
 
