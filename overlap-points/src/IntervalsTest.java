@@ -75,6 +75,11 @@ public class IntervalsTest {
         test.intervalInsert(2, 2);
         test.intervalInsert(-1, 5);
         test.intervalInsert(3, -7);
+        
+        assertEquals(1, test.getRBTree().getRoot().getEmax().getDir()); //startpoint
+        assertEquals(2, test.getRBTree().getRoot().getEmax().getValue()); //Key == 2
+        
+        
         assertEquals(false, test.intervalDelete(1));
     }
 
@@ -98,6 +103,7 @@ public class IntervalsTest {
         test.intervalInsert(-1, 5);
         test.intervalInsert(3, -7);
         test.getRBTree();
+        assertEquals(6, test.findPOM());
     }
 
 }

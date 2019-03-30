@@ -89,6 +89,7 @@ public class treeTests {
 		assertEquals(Tree.getRoot().left.getVal(), 1);
 		
 		//Maxval, emax are wrong
+		assertEquals(Tree.getRoot().getVal(), 1);
 		assertEquals(Tree.getRoot().getMaxVal(), 2);
 		
 	}
