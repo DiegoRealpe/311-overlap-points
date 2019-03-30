@@ -86,17 +86,16 @@ public class Node {
 		//I can't assign a node Nill to an endpoint emax
 		if (point != null){
 			if (left.point == null && right.point == null){
-				val = point.getDir();
 				emax = point;
-				if (val < 0){
-					maxval = 0;
+				if (point.getDir() < 0){
+					val = maxval = 0;
 				} else {
-					maxval = emax.getDir();
+					val = maxval = emax.getDir();
 				}
 			} else if (left.point != null && right.point == null){
 				val = left.val + point.getDir();
-				if (left.emax.getValue() >= val){
-					maxval = left.emax.getValue();
+				if (left.maxval >= val){
+					maxval = left.maxval;
 					emax = left.emax;
 				}
 				else {
@@ -105,8 +104,8 @@ public class Node {
 				}
 			} else if (this.left.point == null){
 				val = right.val + point.getDir();
-				if (right.emax.getValue() > val){
-					maxval = right.emax.getValue();
+				if (right.maxval > val){
+					maxval = right.maxval;
 					emax = right.emax;
 				}
 				else {
@@ -115,14 +114,14 @@ public class Node {
 				}
 			} else {
 				val = left.val + right.val + point.getDir();
-				if (left.emax.getValue() >= val && left.emax.getValue() >= right.emax.getValue()){
-					maxval = left.emax.getValue();
+				if (left.maxval >= val && left.maxval >= right.maxval){
+					maxval = left.maxval;
 					emax = left.emax;
-				} else if (val > left.emax.getValue() && val > right.emax.getValue()){
+				} else if (val > left.maxval && val > right.maxval){
 					maxval = val;
 					emax = point;
-				} else if (right.emax.getValue() > val && right.emax.getValue() > left.emax.getValue()){
-					maxval = right.emax.getValue();
+				} else if (right.maxval > val && right.maxval > left.maxval){
+					maxval = right.maxval;
 					emax = right.emax;
 				}
 			}

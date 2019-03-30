@@ -53,7 +53,7 @@ public class IntervalsTest {
         test.intervalInsert(2, 8);
         test.intervalInsert(3, 7);
         test.intervalInsert(4, 6);
-        assertEquals(9, test.findPOM());
+        assertEquals(5, test.findPOM());
     }
 
     @org.junit.Test
