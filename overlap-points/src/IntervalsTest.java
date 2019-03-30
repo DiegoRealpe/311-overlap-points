@@ -17,6 +17,16 @@ public class IntervalsTest {
 
     @org.junit.Test
     public void intervalInsert() {
+        /**
+         *      -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8   9   10
+         *      |----|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+         *                                           e1----------e2
+         *                                               e3----------e4
+         *                                               e5----------e6
+         *                                                  e7e8
+         *                                       e9----------------------e10
+         *               e11-------------------------------------e12
+         */
         test = new Intervals();
         test.intervalInsert(0, 3);
         test.intervalInsert(1, 4);
@@ -28,17 +38,36 @@ public class IntervalsTest {
 
     @org.junit.Test
     public void findPOM() throws Exception {
+        /**
+         *      0   1   2   3   4   5   6   7   8   9   10
+         *      |---|---|---|---|---|---|---|---|---|---|
+         *      e1--------------------------------------e2
+         *          e3------------------------------e4
+         *              e5----------------------e6
+         *                  e7--------------e8
+         *                      e9------e10
+         */
         test = new Intervals();
         test.intervalInsert(0, 10);
         test.intervalInsert(1, 9);
         test.intervalInsert(2, 8);
         test.intervalInsert(3, 7);
         test.intervalInsert(4, 6);
-        assertEquals(5, test.findPOM());
+        assertEquals(9, test.findPOM());
     }
 
     @org.junit.Test
     public void intervalDelete() throws Exception {
+        /**
+         *     -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8   9   10
+         *      |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+         *                                      e1----------e2
+         *                                          e3----------e4
+         *                                          e5----------e6
+         *                                             e7e8
+         *                                  e9----------------------e10
+         *          e11-------------------------------------e12
+         */
         test = new Intervals();
         test.intervalInsert(0, 3);
         test.intervalInsert(1, 4);
@@ -51,6 +80,16 @@ public class IntervalsTest {
 
     @org.junit.Test
     public void getRBTree() throws Exception {
+        /**
+         *      -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8   9   10
+         *      |----|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+         *                                           e1----------e2
+         *                                               e3----------e4
+         *                                               e5----------e6
+         *                                                  e7e8
+         *                                       e9----------------------e10
+         *               e11-------------------------------------e12
+         */
         test = new Intervals();
         test.intervalInsert(0, 3);
         test.intervalInsert(1, 4);

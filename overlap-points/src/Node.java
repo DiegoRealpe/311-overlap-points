@@ -82,18 +82,20 @@ public class Node {
 	}
 
 	public void recalculateNode(){
-		//TODO
 		//Make sure that the emax is assigned to Nil if it is the last endpoint
 		//I can't assign a node Nill to an endpoint emax
-		if (this.left.maxval >= this.right.maxval){
-			this.emax = this.left.emax;
-			this.maxval = this.left.maxval;
-		} else {
-			this.emax = this.right.emax;
-			this.maxval = this.right.maxval;
-		}
-		if (this.point != null){
+		if (this.left.point != null && this.right.point != null){
+			if (this.left.maxval >= this.right.maxval){
+				this.emax = this.left.emax;
+				this.maxval = this.left.maxval;
+			} else {
+				this.emax = this.right.emax;
+				this.maxval = this.right.maxval;
+			}
 			val = this.right.val + this.left.val + this.getP();
+		} else {
+			this.emax = this.point;
+			this.maxval = this.val;
 		}
 	}
 }

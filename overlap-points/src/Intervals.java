@@ -16,8 +16,10 @@ public class Intervals {
 		// checking which is start and which is end
 		int firstval = Math.min(a, b);
 		Endpoint beginning = new Endpoint(firstval, IDcounter, START);
+		IDcounter++;
 		int secondval = Math.max(a, b);
 		Endpoint end = new Endpoint(secondval, IDcounter, END);
+		IDcounter++;
 		// inserting interval into tree
 		intervalTree.insertPair(beginning, end);
 	}
