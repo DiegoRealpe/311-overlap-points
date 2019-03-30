@@ -13,9 +13,10 @@ public class Node {
 	 * timepos = Node.Key = point in the timeline
 	 */
 	private int timePos;
-	protected Endpoint point, emax;
+	protected final Endpoint point; //should not be modified
 
 	// variables that can change
+	protected Endpoint emax;
 	protected Node parent, left, right;
 	protected int color, maxval, val;
 
@@ -38,6 +39,8 @@ public class Node {
 		this.color = BLACK;
 		//Nil node points to itself
 		//Since the Root's parent is not "null", it is Nil
+		this.point = null;
+		val = 0;
 		this.parent = this.left = this.right = this; 
 	}
 
@@ -54,10 +57,15 @@ public class Node {
 	}
 
 	public int getKey() {
+		if(point == null) {
+			System.out.println("I should't be asked this! Error!");
+		}
 		return this.timePos; // moment in the timeline
 	}
 
 	public int getP() {
+		if(point == null)
+			return 0;
 		return this.point.getDir(); // +1 OR -1 according to start or end
 	}
 

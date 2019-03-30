@@ -217,7 +217,7 @@ public class RBTree {
 	 * @param axis
 	 */
 	private void rotateLeft(Node axis) {
-		if (axis.left == Nil) {
+		if (axis.right == Nil) {
 			System.out.println("Rotate Left Error, Nil newAxis");
 		}
 
