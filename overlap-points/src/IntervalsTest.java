@@ -1,4 +1,5 @@
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -15,7 +16,7 @@ public class IntervalsTest {
     }
 
     @org.junit.Test
-    public void intervalInsertAndFindPOM() {
+    public void intervalInsert() {
         test = new Intervals();
         test.intervalInsert(0, 3);
         test.intervalInsert(1, 4);
@@ -23,7 +24,17 @@ public class IntervalsTest {
         test.intervalInsert(2, 2);
         test.intervalInsert(-1, 5);
         test.intervalInsert(3, -7);
-        assertEquals(6, test.findPOM());
+    }
+
+    @org.junit.Test
+    public void findPOM() throws Exception {
+        test = new Intervals();
+        test.intervalInsert(0, 10);
+        test.intervalInsert(1, 9);
+        test.intervalInsert(2, 8);
+        test.intervalInsert(3, 7);
+        test.intervalInsert(4, 6);
+        assertEquals(5, test.findPOM());
     }
 
     @org.junit.Test
