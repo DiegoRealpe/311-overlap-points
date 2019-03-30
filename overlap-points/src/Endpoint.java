@@ -63,4 +63,8 @@ public class Endpoint {
     protected int getContainNum(){
         return this.containNum;
     }
+
+//    public void setDirection(int n){
+//        this.direction = n;
+//    }
 }

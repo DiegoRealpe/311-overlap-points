@@ -1,17 +1,13 @@
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.*;
 
-@RunWith(Arquillian.class)
+@RunWith(JUnit4.class)
 public class IntervalsTest {
 
-    Intervals test, test2, test3;
+    Intervals test;
 
     @Before
     public void init(){
@@ -19,32 +15,39 @@ public class IntervalsTest {
     }
 
     @org.junit.Test
-    public void intervalInsert() throws Exception {
+    public void intervalInsertAndFindPOM() {
+        test = new Intervals();
         test.intervalInsert(0, 3);
         test.intervalInsert(1, 4);
         test.intervalInsert(1, 4);
         test.intervalInsert(2, 2);
         test.intervalInsert(-1, 5);
         test.intervalInsert(3, -7);
+        assertEquals(6, test.findPOM());
     }
 
     @org.junit.Test
     public void intervalDelete() throws Exception {
-    }
-
-    @org.junit.Test
-    public void findPOM() throws Exception {
+        test = new Intervals();
+        test.intervalInsert(0, 3);
+        test.intervalInsert(1, 4);
+        test.intervalInsert(1, 4);
+        test.intervalInsert(2, 2);
+        test.intervalInsert(-1, 5);
+        test.intervalInsert(3, -7);
+        assertEquals(1, false);
     }
 
     @org.junit.Test
     public void getRBTree() throws Exception {
-    }
-
-    @Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-                .addClass(Intervals.class)
-                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+        test = new Intervals();
+        test.intervalInsert(0, 3);
+        test.intervalInsert(1, 4);
+        test.intervalInsert(1, 4);
+        test.intervalInsert(2, 2);
+        test.intervalInsert(-1, 5);
+        test.intervalInsert(3, -7);
+        test.getRBTree();
     }
 
 }
