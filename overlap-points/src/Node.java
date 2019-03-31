@@ -72,6 +72,12 @@ public class Node {
 		return val;
 	}
 
+    public int getMaxVal() {
+        if (point == null)
+            return 0;
+        return maxval;
+    }
+
 	public Endpoint getEndpoint() {
 		return this.point;
 	}
@@ -82,12 +88,6 @@ public class Node {
 
 	public int getColor() {
 		return this.color;
-	}
-
-	public int getMaxVal() {
-		if (point == null)
-			return 0;
-		return maxval;
 	}
 
 	/**
@@ -128,51 +128,5 @@ public class Node {
 				emax = right.getEmax();
 			}
 		}
-
-	}
-
-	private void recalculateEmax() {
-		/*if (point != null) {
-			if (left.point == null && right.point == null) {
-				emax = point;
-			} else if (left.point != null && right.point == null && left.maxval >= val) {
-				maxval = left.maxval;
-			} else if (this.left.point == null && right.maxval > val) {
-				maxval = right.maxval;
-			} else if (left.maxval >= val && left.maxval >= right.maxval) {
-				maxval = left.maxval;
-			} else if (left.maxval >= val && left.maxval >= right.maxval) {
-				maxval = left.maxval;
-			} else if (right.maxval > val && right.maxval > left.maxval) {
-				maxval = right.maxval;
-			} else {
-				maxval = val;
-			}
-		}*/
-	}
-
-	private void newMaxVal() {
-		// Make sure that the emax is assigned to Nil if it is the last endpoint
-		// I can't assign a node Nill to an endpoint emax
-		/*if (point != null) {
-
-			if (left.point == null && right.point == null) {
-				if (val < 0) {
-					maxval = 0;
-				} else {
-					maxval = emax.getDir();
-				}
-			} else if (left.point != null && right.point == null && left.maxval >= val) {
-				maxval = left.maxval;
-			} else if (this.left.point == null && right.maxval > val) {
-				maxval = right.maxval;
-			} else if (left.maxval >= val && left.maxval >= right.maxval) {
-				maxval = left.maxval;
-			} else if (right.maxval > val && right.maxval > left.maxval) {
-				maxval = right.maxval;
-			} else {
-				maxval = val;
-			}
-		}*/
 	}
 }

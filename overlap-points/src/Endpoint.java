@@ -45,26 +45,4 @@ public class Endpoint {
     protected int getDir() {
         return direction;
     }
-    
-    //------------------Adrian's Protected Methods
-
-    /**
-     * sets the number of intervals that the node is in
-     * @param num
-     */
-    protected void setContainNum(int num) {
-        this.containNum = num;
-    }
-
-    /**
-     * returns the number of intervals that the node is in.
-     * @return
-     */
-    protected int getContainNum(){
-        return this.containNum;
-    }
-
-//    public void setDirection(int n){
-//        this.direction = n;
-//    }
 }
