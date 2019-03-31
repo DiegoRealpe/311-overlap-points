@@ -2,20 +2,19 @@
  * Represents the Position of a specific end point for an interval
  * either its start or its end
  *
- * @author diegort
+ * @author Diego Realpe, diegort
+ * @author Adrian Hamill, adrianh
  */
 public class Endpoint {
 
     private int position;
     private int ID;
     private int direction;
-    private int containNum;
 
     public Endpoint(int ab, int ID, int direction) {
         this.position = ab;
         this.ID = ID;
         this.direction = direction;
-        this.containNum = 0;
     }
 
 	/**

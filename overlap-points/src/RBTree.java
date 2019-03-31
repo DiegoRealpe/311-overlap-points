@@ -2,31 +2,43 @@
 /**
  * Class representing the Self Balancing tree of endpoints
  *
- * @author diegort, adrianh
+ * @author Diego Realpe, diegort
+ * @author Adrian Hamill, adrianh
  */
 public class RBTree {
 	private static final int RED = 0, BLACK = 1;
-	private final Node Nil = new Node();
-	private Node Root = Nil;
+	private final Node nil = new Node();
+	private Node root = nil;
 
 	/**
-	 * Class begins with a null Root and a reference to a Nil node, which marks the
-	 * last endpoint. As it is empty Root and Nil point to the same null
+	 * Class begins with a null root and a reference to a Nil node, which marks the
+	 * last endpoint. As it is empty root and Nil point to the same null
 	 */
 	public RBTree() {
-		// Root parent, left and right child point to Nil
 	}
 
+	/**
+	 * Checks if the tree is empty
+	 * @return
+	 */
 	public boolean isEmpty() {
-		return Root == Nil;
+		return root == nil;
 	}
 
+	/**
+	 * Returns the root to the current tree
+	 * @return
+	 */
 	public Node getRoot() {
-		return Root;
+		return root;
 	}
 
+	/**
+	 * Returns the nil node of the tree
+	 * @return
+	 */
 	public Node getNILNode() {
-		return Nil;
+		return nil;
 	}
 
 	/**
@@ -35,7 +47,7 @@ public class RBTree {
 	 */
 	public int getSize() {
 		if (!isEmpty())
-			return recCount(Root);
+			return recCount(root);
 		return 0;
 	}
 
@@ -46,14 +58,14 @@ public class RBTree {
 	 * @return
 	 */
 	private int recCount(Node n) {
-		if (n.left == Nil && n.right == Nil) {
+		if (n.left == nil && n.right == nil) {
 			return 1;
 		} else {
 			int nodeCount = 1;
-			if (n.left != Nil) {
+			if (n.left != nil) {
 				nodeCount += recCount(n.left);
 			}
-			if (n.right != Nil) {
+			if (n.right != nil) {
 				nodeCount += recCount(n.right);
 			}
 			return nodeCount;
@@ -66,27 +78,26 @@ public class RBTree {
 	 */
 	public int getHeight() {
 		if (!isEmpty()) {
-			return recDepth(Root);
+			return recDepth(root);
 		}
 		return 0;
 	}
 
 	/**
-	 * base: if non Nil node with only Nil children, height 1 
+	 * base: if non nil node with only nil children, height 1
 	 * step: returns 1(itself) + Max between left and right depths
 	 * @param n
 	 * @return
 	 */
 	private int recDepth(Node n) {
-		if (n.left == Nil && n.right == Nil) {
+		if (n.left == nil && n.right == nil) {
 			return 1;
 		} else {
-			// PS: Nil nodes are height 0
 			int lDepth = 0, rDepth = 0;
-			if (n.left != Nil) {
+			if (n.left != nil) {
 				lDepth = recDepth(n.left);
 			}
-			if (n.right != Nil) {
+			if (n.right != nil) {
 				rDepth = recDepth(n.right);
 			}
 			return Math.max(lDepth, rDepth) + 1;
@@ -95,10 +106,15 @@ public class RBTree {
 
 	// -----------------------RBT Algorithms
 
+	/**
+	 * Takes in the two endpoints creates nodes for them and passes them to the insert function
+	 * @param beg
+	 * @param end
+	 */
 	protected void insertPair(Endpoint beg, Endpoint end) {
 		// According to book, nodes to be inserted need to begin as RED
-		Node left = new Node(beg, Nil);
-		Node right = new Node(end, Nil);
+		Node left = new Node(beg, nil);
+		Node right = new Node(end, nil);
 		insert(left);
 		insert(right);
 	}
@@ -108,20 +124,20 @@ public class RBTree {
 	 * @param n
 	 */
 	protected void insert(Node n) {
-		recInsert(Nil, Root, n);
+		recInsert(nil, root, n);
 		RB_Insert_Fixup(n);
 	}
 
 	/**
 	 * Recursion algorithm that traverses down the RBT looking to insert a
 	 * new node n. When recursion ends, it recalculates the parent of the subtree
-	 * on each call until it reaches Nil.
+	 * on each call until it reaches nil.
 	 * @param previous Node parent of traverse
-	 * @param traverse Node to be traversed through (or replaced if Nil)
+	 * @param traverse Node to be traversed through (or replaced if nil)
 	 * @param n        Node to be inserted
 	 */
 	private void recInsert(Node previous, Node traverse, Node n) {
-		if (traverse != Nil) {
+		if (traverse != nil) {
 			if (n.getKey() < traverse.getKey()) {
 				recInsert(traverse, traverse.left, n);
 			} else {
@@ -133,16 +149,16 @@ public class RBTree {
 		} 
 		else { // base
 			n.parent = previous; // Give inserted node a Daddy
-			// Update Daddy, set it as a L or R child or if it is the Root
-			if (previous == Nil) {// if parent is Nil, then it must be the Root
-				Root = n; // Assign to Root
+			// Update Daddy, set it as a L or R child or if it is the root
+			if (previous == nil) {// if parent is nil, then it must be the root
+				root = n; // Assign to root
 			} else if (n.getKey() < previous.getKey()) {
 				previous.left = n; // Assign to left
 			} else {
 				previous.right = n; // Assign to right
 			}
 			/**
-			 * Constructor already assigned Nil children and RED color for new node Adrian's
+			 * Constructor already assigned nil children and RED color for new node Adrian's
 			 * function calculates other values for new leaf node
 			 */
 			n.recalc();
@@ -152,7 +168,7 @@ public class RBTree {
 
 	/**
 	 * Method fixes a violation of the Red-Black properties that can arise from
-	 * inserting a red node into the tree. R3 - Red cannot be child of Red or Root
+	 * inserting a red node into the tree. R3 - Red cannot be child of Red or root
 	 * cannot be Red
 	 * @param n
 	 */
@@ -208,7 +224,7 @@ public class RBTree {
 		}
 		// Asserts property 2 in case it got recolored
 		// setting it to black cannot break black path propery either
-		Root.color = BLACK;
+		root.color = BLACK;
 	}
 
 	/**
@@ -217,22 +233,22 @@ public class RBTree {
 	 * @param axis
 	 */
 	private void rotateLeft(Node axis) {
-		if (axis.right == Nil) {
-			System.out.println("Rotate Left Error, Nil newAxis");
+		if (axis.right == nil) {
+			System.out.println("Rotate Left Error, nil newAxis");
 		}
 
 		Node newAxis = axis.right;
 
 		axis.right = newAxis.left;// give newAxis Lchild a new daddy
-		if (newAxis.left != Nil) {// tell newAxis Lchild it has a new daddy
+		if (newAxis.left != nil) {// tell newAxis Lchild it has a new daddy
 			newAxis.left.parent = axis;
 		}
 
 		newAxis.parent = axis.parent;// give axis parent to newAxi
 		// 3 cases for axis parent telling it has a different child
-		// it is either Nil(Root), a left or right child
-		if (axis.parent == Nil) {// if it is Root, its parent is Nil
-			Root = newAxis;// Set newAxis to Root
+		// it is either nil(root), a left or right child
+		if (axis.parent == nil) {// if it is root, its parent is nil
+			root = newAxis;// Set newAxis to root
 		} else if (axis.parent.right == axis) {
 			axis.parent.right = newAxis;
 		} else {
@@ -255,21 +271,21 @@ public class RBTree {
 	 * @param axis
 	 */
 	private void rotateRight(Node axis) {
-		if (axis.left == Nil) {
-			System.out.println("Rotate Right Error, Nil newAxis");
+		if (axis.left == nil) {
+			System.out.println("Rotate Right Error, nil newAxis");
 		}
 
 		Node newAxis = axis.left;
 
 		axis.left = newAxis.right;// give
-		if (newAxis.right != Nil) {// if non Nil
+		if (newAxis.right != nil) {// if non nil
 			newAxis.right.parent = axis;// notify
 		}
 
 		newAxis.parent = axis.parent;// reassign parent
 		// 3 cases: Notify parent
-		if (axis.parent == Nil) {
-			Root = newAxis;
+		if (axis.parent == nil) {
+			root = newAxis;
 		} else if (axis.parent.right == axis) {
 			axis.parent.right = newAxis;
 		} else {

@@ -1,17 +1,13 @@
 /**
  * Node unit of the Red Black tree
  *
- * @author diegort, adrianh
+ * @author Diego Realpe, diegort
+ * @author Adrian Hamill, adrianh
  */
 public class Node {
 
 	private static final int RED = 0, BLACK = 1;
 
-	/**
-	 * TODO: Eventually delete this variable, it is redundant it references the same
-	 * value as point.getValue() timepos = Node.Key = point in the timeline
-	 */
-	private int timePos;
 	protected final Endpoint point; // should not be modified
 
 	// variables that can change
@@ -25,7 +21,6 @@ public class Node {
 	 * @param point
 	 */
 	public Node(Endpoint point, Node TNil) {
-		this.timePos = point.getValue();
 		this.color = RED;
 		this.point = point;
 		this.parent = this.left = this.right = TNil;
@@ -43,49 +38,89 @@ public class Node {
 		this.parent = this.left = this.right = this;
 	}
 
+    /**
+     * Returns the parent of the current node
+     * @return
+     */
 	public Node getParent() {
 		return this.parent;
 	}
 
+    /**
+     * Returns the left node of the current node
+     * @return
+     */
 	public Node getLeft() {
 		return this.left;
 	}
 
+    /**
+     * Returns the right node of the current node
+     * @return
+     */
 	public Node getRight() {
 		return this.right;
 	}
 
+    /**
+     * Returns the key of the current node, if called on nil it prints a message
+     * @return
+     */
 	public int getKey() {
 		if (point == null) {
 			System.out.println("I should't be asked this! Error!");
 		}
-		return this.timePos; // moment in the timeline
+		return this.point.getValue(); // moment in the timeline
 	}
 
+    /**
+     * Returns the direction of the current node
+     * @return
+     */
 	public int getP() {
 		if (point == null)
 			return 0;
 		return this.point.getDir(); // +1 OR -1 according to start or end
 	}
 
+    /**
+     * Returns the summation of the current node
+     * @return
+     */
 	public int getVal() {
 		return val;
 	}
 
+    /**
+     * Returns the maximum summation of the current node
+     * @return
+     */
     public int getMaxVal() {
         if (point == null)
             return 0;
         return maxval;
     }
 
+    /**
+     * Returns the endpoint of the current node
+     * @return
+     */
 	public Endpoint getEndpoint() {
 		return this.point;
 	}
 
+    /**
+     * Returns the endpoint corresponding to the maximum summation of the current node
+     * @return
+     */
 	public Endpoint getEmax() {
 		return emax;
 	}
 
+    /**
+     * Returns the color of the current node
+     * @return
+     */
 	public int getColor() {
 		return this.color;
 	}
@@ -101,6 +136,9 @@ public class Node {
 		// newMaxVal();
 	}
 
+    /**
+     * Recalculates the summation of the current node
+     */
 	private void newVal() {
 		if (point != null) {
 			val = point.getDir();
@@ -111,6 +149,9 @@ public class Node {
 		}
 	}
 
+    /**
+     * Reassigns the maximum summation and maximum endpoint of the current node
+     */
 	private void newMax() {
 		if (point != null) {
 

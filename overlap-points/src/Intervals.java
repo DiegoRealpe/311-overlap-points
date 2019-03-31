@@ -1,5 +1,6 @@
 /**
- * @author diegort, adrianh
+ * @author Diego Realpe, diegort
+ * @author Adrian Hamill, adrianh
  */
 public class Intervals {
 
@@ -11,6 +12,11 @@ public class Intervals {
 		// Leave empty, default initialize everything
 	}
 
+	/**
+	 * Takes in the integers of our interval and makes endpoints out of them and adds them into the tree
+	 * @param a
+	 * @param b
+	 */
 	public void intervalInsert(int a, int b) {
 		// Making interval with two endpoints
 		// checking which is start and which is end
@@ -23,6 +29,11 @@ public class Intervals {
 		intervalTree.insertPair(beginning, end);
 	}
 
+	/**
+	 * Takes in an interval ID and deletes the corresponding interval
+	 * @param intervalID
+	 * @return
+	 */
 	public boolean intervalDelete(int intervalID) {
 		return false; // this probably aint gonna change
 	}
@@ -37,6 +48,10 @@ public class Intervals {
 		return intervalTree.getRoot().getMaxVal();
 	}
 
+	/**
+	 * Returns the Red black tree that has been created by the above methods
+	 * @return
+	 */
 	public RBTree getRBTree() {
 		return intervalTree;
 	}
