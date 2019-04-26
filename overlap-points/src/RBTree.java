@@ -301,5 +301,4 @@ public class RBTree {
 		newAxis.left.recalc();
 		newAxis.recalc();
 	}
-
 }

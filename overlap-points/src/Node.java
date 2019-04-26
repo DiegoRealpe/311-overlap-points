@@ -170,4 +170,43 @@ public class Node {
 			}
 		}
 	}
+
+	//-----------------------------------------------------------------
+	//Testing methods
+
+	public boolean isNil(){
+		return this.point == null;
+	}
+
+	public void setLeft(Node left) {
+		this.left = left;
+	}
+
+	public void setRight(Node right) {
+		this.right = right;
+	}
+
+	public void setMaxval(int maxval) {
+		this.maxval = maxval;
+	}
+
+	public void setVal(int val) {
+		this.val = val;
+	}
+
+	public void setEmax(Endpoint emax) {
+		this.emax = emax;
+	}
+
+	public void setParent(Node parent) {
+		this.parent = parent;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
+	public int getColorInEnum() {
+		return this.color;
+	}
 }
