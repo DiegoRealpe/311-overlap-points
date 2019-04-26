@@ -9,6 +9,8 @@ public class RBTree {
 	private static final int RED = 0, BLACK = 1;
 	private final Node nil = new Node();
 	private Node root = nil;
+	private int Size = 0;
+	private int Height = 0;
 
 	/**
 	 * Class begins with a null root and a reference to a Nil node, which marks the
@@ -42,67 +44,64 @@ public class RBTree {
 	}
 
 	/**
-	 * Performs a recursive traversal and counts internal nodes
+	 * UPDATED: Returns instance variable on O(1)
 	 * @return
 	 */
 	public int getSize() {
-		if (!isEmpty())
-			return recCount(root);
-		return 0;
+		return Size;
 	}
 
 	/**
+	 * DEPRECATED
 	 * base: if n is leaf, counts 1 
 	 * step: returns 1(itself) + left nodes + right nodes
 	 * @param n
 	 * @return
 	 */
-	private int recCount(Node n) {
-		if (n.left == nil && n.right == nil) {
+	/*private int recCount(Node n) {
+		if (n.left.equals(nil) && n.right.equals(nil)) {
 			return 1;
 		} else {
 			int nodeCount = 1;
-			if (n.left != nil) {
+			if (!n.left.equals(nil)) {
 				nodeCount += recCount(n.left);
 			}
-			if (n.right != nil) {
+			if (!n.right.equals(nil)) {
 				nodeCount += recCount(n.right);
 			}
 			return nodeCount;
 		}
-	}
+	}*/
 
 	/**
-	 * Performs a recursive traversal and obtains the longest simple path
+	 * UPDATED: Returns instance variable on O(1)
 	 * @return
 	 */
 	public int getHeight() {
-		if (!isEmpty()) {
-			return recDepth(root);
-		}
-		return 0;
+		return Height;
 	}
 
 	/**
+	 * DEPRECATED
 	 * base: if non nil node with only nil children, height 1
 	 * step: returns 1(itself) + Max between left and right depths
 	 * @param n
 	 * @return
 	 */
-	private int recDepth(Node n) {
-		if (n.left == nil && n.right == nil) {
+	/*private int recDepth(Node n) {
+		if (n.left.equals(nil) && n.right.equals(nil)) {
 			return 1;
 		} else {
 			int lDepth = 0, rDepth = 0;
-			if (n.left != nil) {
+			if (!n.left.equals(nil)) {
 				lDepth = recDepth(n.left);
 			}
-			if (n.right != nil) {
+			if (!n.right.equals(nil)) {
 				rDepth = recDepth(n.right);
 			}
 			return Math.max(lDepth, rDepth) + 1;
 		}
-	}
+	}*/
 
 	// -----------------------RBT Algorithms
 
@@ -124,8 +123,30 @@ public class RBTree {
 	 * @param n
 	 */
 	protected void insert(Node n) {
+		//Inserting node
 		recInsert(nil, root, n);
+		
+		//Update Size
+		++Size;
+		
+		//Recolor and Rotate
 		RB_Insert_Fixup(n);
+		
+		//Update Height
+		int tempHeight = 0;
+		Node tempNode = n;
+		
+		//If n is in the deepest node branch, 
+		//it can only have one child due to rotation
+		if(!n.left.isNil() || !n.right.isNil()) {
+			++tempHeight;
+		}
+		//Go up O(log(n))
+		while(!tempNode.equals(nil)) {
+			++tempHeight;
+			tempNode = tempNode.parent;
+		}
+		Height = Math.max(Height, tempHeight);
 	}
 
 	/**
@@ -137,7 +158,7 @@ public class RBTree {
 	 * @param n        Node to be inserted
 	 */
 	private void recInsert(Node previous, Node traverse, Node n) {
-		if (traverse != nil) {
+		if (!traverse.equals(nil)) {
 			if (n.getKey() < traverse.getKey()) {
 				recInsert(traverse, traverse.left, n);
 			} else {

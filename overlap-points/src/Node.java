@@ -69,7 +69,7 @@ public class Node implements Comparable<Node>{
      * @return
      */
 	public int getKey() {
-		if (point.getID() != -1) {
+		if (point.getID() == -1) {
 			System.out.println("Asking the Key of the Nil node?");
 			return 0;
 		}
