@@ -138,7 +138,7 @@ public class RBTree {
 		
 		//If n is in the deepest node branch, 
 		//it can only have one child due to rotation
-		if(!n.left.isNil() || !n.right.isNil()) {
+		if(!n.left.equals(nil) || !n.right.equals(nil)) {
 			++tempHeight;
 		}
 		//Go up O(log(n))
