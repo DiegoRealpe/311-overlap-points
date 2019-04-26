@@ -4,7 +4,7 @@
  * @author Diego Realpe, diegort
  * @author Adrian Hamill, adrianh
  */
-public class Node {
+public class Node implements Comparable<Node>{
 
 	private static final int RED = 0, BLACK = 1;
 
@@ -30,12 +30,14 @@ public class Node {
 	 * Creates an invalid Nil Node
 	 */
 	public Node() {
-		this.color = BLACK;
 		// Nil node points to itself
 		// Since the Root's parent is not "null", it is Nil
-		this.point = null;
-		val = 0;
 		this.parent = this.left = this.right = this;
+		this.color = BLACK;
+		this.point = new Endpoint(0, -1, 0);
+		this.emax = this.point;
+		this.val = 0;
+		this.maxval = 0;
 	}
 
     /**
@@ -67,8 +69,9 @@ public class Node {
      * @return
      */
 	public int getKey() {
-		if (point == null) {
-			System.out.println("I should't be asked this! Error!");
+		if (point.getID() != -1) {
+			System.out.println("Asking the Key of the Nil node?");
+			return 0;
 		}
 		return this.point.getValue(); // moment in the timeline
 	}
@@ -78,8 +81,6 @@ public class Node {
      * @return
      */
 	public int getP() {
-		if (point == null)
-			return 0;
 		return this.point.getDir(); // +1 OR -1 according to start or end
 	}
 
@@ -96,8 +97,6 @@ public class Node {
      * @return
      */
     public int getMaxVal() {
-        if (point == null)
-            return 0;
         return maxval;
     }
 
@@ -140,11 +139,11 @@ public class Node {
      * Recalculates the summation of the current node
      */
 	private void newVal() {
-		if (point != null) {
+		if (point.getID() != -1) {
 			val = point.getDir();
-			if (left.point != null)
+			if (left.point.getID() != -1)
 				val += left.val;
-			if (right.point != null)
+			if (right.point.getID() != -1)
 				val += right.val;
 		}
 	}
@@ -153,7 +152,7 @@ public class Node {
      * Reassigns the maximum summation and maximum endpoint of the current node
      */
 	private void newMax() {
-		if (point != null) {
+		if (point.getID() != -1) {
 
 			// calculating all 3 cases
 			int case1 = left.maxval;
@@ -170,12 +169,37 @@ public class Node {
 			}
 		}
 	}
+	
+	/**
+	 * Equals method
+	 * @return
+	 */
+	@Override
+	public boolean equals(Object o) {
+	    if (o == null)
+	        return false;
+		if (this == o)
+	        return true;
+		if (!(o instanceof Node)) 
+            return false; 
+		Node n = (Node) o;
+		return ((this.getEndpoint().getID() == n.getEndpoint().getID()) && (this.getEndpoint().getDir() == n.getEndpoint().getDir()));
+	}
+	
+	/**
+	 * Comparable interface
+	 * @return
+	 */
+	@Override
+	public int compareTo(Node n) {
+		return this.getKey() - n.getKey();
+	}
 
 	//-----------------------------------------------------------------
 	//Testing methods
 
 	public boolean isNil(){
-		return this.point == null;
+		return this.point.getID() == -1;
 	}
 
 	public void setLeft(Node left) {

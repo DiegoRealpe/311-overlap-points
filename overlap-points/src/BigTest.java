@@ -1,4 +1,4 @@
-import javafx.util.Pair;
+/*import javafx.util.Pair;
 import org.junit.Test;
 import org.junit.BeforeClass;
 import java.util.ArrayList;
@@ -170,4 +170,4 @@ public class BigTest {
 		//System.out.println("Depth: " + node.getHeight());
 		if (!node.getRight().isNil()) printNode(node.getRight());
 	}
-}
+}*/

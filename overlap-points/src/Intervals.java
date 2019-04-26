@@ -45,7 +45,7 @@ public class Intervals {
 	 * @return
 	 */
 	public int findPOM() {
-		return intervalTree.getRoot().getMaxVal();
+		return intervalTree.getRoot().getEmax().getValue();
 	}
 
 	/**

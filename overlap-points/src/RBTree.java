@@ -150,7 +150,7 @@ public class RBTree {
 		else { // base
 			n.parent = previous; // Give inserted node a Daddy
 			// Update Daddy, set it as a L or R child or if it is the root
-			if (previous == nil) {// if parent is nil, then it must be the root
+			if (previous.equals(nil)) {// if parent is nil, then it must be the root
 				root = n; // Assign to root
 			} else if (n.getKey() < previous.getKey()) {
 				previous.left = n; // Assign to left
@@ -177,7 +177,7 @@ public class RBTree {
 		// Only property it can break is being child of a RED
 		// while loop checks against that
 		while (n.parent.color == RED) {
-			if (n.parent == n.parent.parent.left) {
+			if (n.parent.equals(n.parent.parent.left)) {
 				Node uncle = n.parent.parent.right;
 				// Case 1: Recolor
 				if (uncle.color == RED) {// Recolor uncle, n.p and n to hold amount of nodes
@@ -189,7 +189,7 @@ public class RBTree {
 				// Case 2 & 3: Restructure (Only runs once)
 				else {
 					// Case 2: Fix < shape into / shape
-					if (n == n.parent.right) {
+					if (n.equals(n.parent.right)) {
 						n = n.parent; // Set shoulder as axis
 						rotateLeft(n);
 					}
@@ -211,7 +211,7 @@ public class RBTree {
 				// Case 2 & 3
 				else {
 					// Case 2: Fix > shape into \ shape
-					if (n == n.parent.left) {
+					if (n.equals(n.parent.left)) {
 						n = n.parent;
 						rotateRight(n);
 					}
@@ -233,23 +233,23 @@ public class RBTree {
 	 * @param axis
 	 */
 	private void rotateLeft(Node axis) {
-		if (axis.right == nil) {
+		if (axis.right.equals(nil)) {
 			System.out.println("Rotate Left Error, nil newAxis");
 		}
 
 		Node newAxis = axis.right;
 
 		axis.right = newAxis.left;// give newAxis Lchild a new daddy
-		if (newAxis.left != nil) {// tell newAxis Lchild it has a new daddy
+		if (!newAxis.left.equals(nil)) {// tell newAxis Lchild it has a new daddy
 			newAxis.left.parent = axis;
 		}
 
 		newAxis.parent = axis.parent;// give axis parent to newAxi
 		// 3 cases for axis parent telling it has a different child
 		// it is either nil(root), a left or right child
-		if (axis.parent == nil) {// if it is root, its parent is nil
+		if (axis.parent.equals(nil)) {// if it is root, its parent is nil
 			root = newAxis;// Set newAxis to root
-		} else if (axis.parent.right == axis) {
+		} else if (axis.parent.right.equals(axis)) {
 			axis.parent.right = newAxis;
 		} else {
 			axis.parent.left = newAxis;
@@ -271,22 +271,22 @@ public class RBTree {
 	 * @param axis
 	 */
 	private void rotateRight(Node axis) {
-		if (axis.left == nil) {
+		if (axis.left.equals(nil)) {
 			System.out.println("Rotate Right Error, nil newAxis");
 		}
 
 		Node newAxis = axis.left;
 
 		axis.left = newAxis.right;// give
-		if (newAxis.right != nil) {// if non nil
+		if (!newAxis.right.equals(nil)) {// if non nil
 			newAxis.right.parent = axis;// notify
 		}
 
 		newAxis.parent = axis.parent;// reassign parent
 		// 3 cases: Notify parent
-		if (axis.parent == nil) {
+		if (axis.parent.equals(nil)) {
 			root = newAxis;
-		} else if (axis.parent.right == axis) {
+		} else if (axis.parent.right.equals(axis)) {
 			axis.parent.right = newAxis;
 		} else {
 			axis.parent.left = newAxis;
